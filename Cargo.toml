@@ -1,7 +1,7 @@
 [package]
 name = "onitama"
 description="A library for Onitama game"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Hannes Karppila <hannes.karppila@gmail.com>"]
 license = "MIT"
 repository="https://github.com/Dentosal/onitama-rs"
