@@ -4,13 +4,13 @@
 #[macro_use]
 extern crate lazy_static;
 
-mod location;
-mod piece;
-mod card;
-mod cards;
-mod turn;
-mod board;
-mod game;
+pub mod location;
+pub mod piece;
+pub mod card;
+pub mod cards;
+pub mod turn;
+pub mod board;
+pub mod game;
 
 #[cfg(test)]
 mod tests {
