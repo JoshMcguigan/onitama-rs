@@ -1,0 +1,7 @@
+[package]
+name = "onitama"
+version = "0.1.0"
+authors = ["Hannes Karppila <hannes.karppila@gmail.com>"]
+
+[dependencies]
+lazy_static = "0.2"
