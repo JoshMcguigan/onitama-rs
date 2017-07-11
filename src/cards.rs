@@ -37,15 +37,34 @@ lazy_static! {
         c!(s!(0, -1), s!(0, 1), s!(-1, 0)),             // horse
         c!(s!(0, -1), s!(0, 1), s!(1, 0)),              // ox
         c!(s!(0, -1), s!(-1, 1), s!(1, 1)),             // crane
-        c!(s!(0, -1), s!(-1, 1), s!(1, 1)),             // boar
+        c!(s!(0, -1), s!(-1, 0), s!(1, 0)),             // boar
         c!(s!(-1, -1), s!(-1, 1), s!(1, 0)),            // eel
         c!(s!(1, -1), s!(1, 1), s!(-1, 0)),             // cobra
     ];
-
-    pub static ref STARTER: [Side; 16] = [
-        Side::WHITE, Side::BLACK, Side::BLACK, Side::WHITE,
-        Side::WHITE, Side::BLACK, Side::WHITE, Side::BLACK,
-        Side::WHITE, Side::BLACK, Side::BLACK, Side::WHITE,
-        Side::WHITE, Side::BLACK, Side::WHITE, Side::BLACK
-    ];
 }
+
+pub static STARTER: [Side; 16] = [
+    Side::WHITE, Side::BLACK, Side::BLACK, Side::WHITE,
+    Side::WHITE, Side::BLACK, Side::WHITE, Side::BLACK,
+    Side::WHITE, Side::BLACK, Side::BLACK, Side::WHITE,
+    Side::WHITE, Side::BLACK, Side::WHITE, Side::BLACK
+];
+
+pub static CARD_NAMES: [&'static str; 16] = [
+    "tiger",
+    "dragon",
+    "frog",
+    "rabbit",
+    "crab",
+    "elephant",
+    "goose",
+    "rooster",
+    "monkey",
+    "mantis",
+    "horse",
+    "ox",
+    "crane",
+    "boar",
+    "eel",
+    "cobra"
+];
