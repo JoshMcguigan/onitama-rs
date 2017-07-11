@@ -2,7 +2,7 @@ use piece::Side;
 use card::Card;
 use location::Point;
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct Move {
     pub player: Side,
     pub source: Point,

@@ -7,7 +7,7 @@ use cards::{CARDS, STARTER};
 pub type StepAlternatives = HashSet<Step>;
 pub type CardId = usize;
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct Card(CardId);
 impl Card {
     pub fn new(id: CardId) -> Card{
@@ -22,5 +22,8 @@ impl Card {
     }
     pub fn starter(&self) -> Side {
         STARTER[self.0]
+    }
+    pub fn id(&self) -> CardId {
+        self.0
     }
 }

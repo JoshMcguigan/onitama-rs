@@ -48,7 +48,7 @@ impl Board {
 
     pub fn after(&self, m: Move) -> Board {
         assert!(self.allowed(m));
-        let mut board = self.0;
+        let mut board = self.0.clone();
         board[m.target.y as usize][m.target.x as usize] = self[m.source];
         board[m.source.y as usize][m.source.x as usize] = None;
         Board(board)
@@ -69,6 +69,18 @@ impl Board {
     pub fn iter(&self) -> BoardIter {
         BoardIter::new(*self)
     }
+
+    pub fn as_string(&self) -> String {
+        self.iter().map(|x| match x.1 {
+            None => '.',
+            Some(p) => match (p.side, p.king) {
+                (Side::WHITE, false) => 'w',
+                (Side::WHITE, true)  => 'W',
+                (Side::BLACK, false) => 'b',
+                (Side::BLACK, true)  => 'B',
+            }
+        }).collect()
+    }
 }
 impl Index<Point> for Board {
     type Output = Option<Piece>;
@@ -80,23 +92,21 @@ impl Index<Point> for Board {
 
 pub struct BoardIter {
     board: Board,
-    cursor: Point
+    index: usize
 }
 impl BoardIter {
     fn new(board: Board) -> BoardIter {
-        BoardIter {board: board, cursor: Point::new(0, 0)}
+        BoardIter {board: board, index: 0}
     }
 }
 impl Iterator for BoardIter {
     type Item = (Point, Option<Piece>);
 
     fn next(&mut self) -> Option<(Point, Option<Piece>)> {
-        let new_x = (self.cursor.x + 1) % 5;
-        let new_y = self.cursor.y + (if self.cursor.x == 4 {1} else {0});
-
-        if new_y == 5 {None} else {
-            self.cursor = Point::new(new_x, new_y);
-            Some((self.cursor, self.board[self.cursor]))
-        }
+        if self.index < 25 {
+            let p = Point::new((self.index % 5) as u8, (self.index / 5) as u8);
+            self.index += 1;
+            Some((p, self.board[p]))
+        } else {None}
     }
 }

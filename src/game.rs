@@ -8,13 +8,20 @@ use board::Board;
 #[derive(PartialEq, Eq)]
 pub struct Game {
     pub turn: Side,
-    board: Board,
-    start_cards: [Card; 5],
-    player_cards: [HashSet<Card>; 2],
-    free_card: Card
+    pub board: Board,
+    pub start_cards: [Card; 5],
+    pub player_cards: [HashSet<Card>; 2],
+    pub free_card: Card
 }
 impl Game {
     pub fn new(cards: [Card; 5]) -> Game {
+        assert!({
+            let mut cs: Vec<usize> = cards.clone().to_vec().iter().map(|c| c.id()).collect();
+            cs.sort();
+            cs.dedup();
+            cs.len() == cards.len()
+        });
+
         Game {
             turn: cards[4].starter(),
             board: Board::new(),
@@ -53,7 +60,8 @@ impl Game {
         assert!(m.player == self.turn);
 
         let mut new_player_cards = [self.player_cards[0].clone(), self.player_cards[1].clone()];
-        new_player_cards[self.turn.index()].remove(&m.card);
+        let ok = new_player_cards[self.turn.index()].remove(&m.card);
+        assert!(ok);
         new_player_cards[self.turn.index()].insert(self.free_card);
 
         Game {
@@ -62,6 +70,17 @@ impl Game {
             start_cards: self.start_cards,
             player_cards: new_player_cards,
             free_card: m.card
+        }
+    }
+}
+impl Clone for Game {
+    fn clone(&self) -> Game {
+        Game {
+            turn: self.turn,
+            board: self.board,
+            start_cards: self.start_cards,
+            player_cards: [self.player_cards[0].clone(), self.player_cards[1].clone()],
+            free_card: self.free_card
         }
     }
 }
