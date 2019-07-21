@@ -28,20 +28,19 @@ mod tests {
         assert!(!g.is_over());
 
         let fc = take_first_card(&g);
-        g = g.after(Move::new(g.turn, Point::new(2, 4), Point::new(2, 3), fc));
+        g.after(Move::new(g.turn, Point::new(2, 4), Point::new(2, 3), fc));
         assert!(!g.is_over());
 
         let fc = take_first_card(&g);
-        g = g.after(Move::new(g.turn, Point::new(2, 0), Point::new(2, 1), fc));
+        g.after(Move::new(g.turn, Point::new(2, 0), Point::new(2, 1), fc));
         assert!(!g.is_over());
 
         let fc = take_first_card(&g);
-        g = g.after(Move::new(g.turn, Point::new(2, 3), Point::new(2, 2), fc));
+        g.after(Move::new(g.turn, Point::new(2, 3), Point::new(2, 2), fc));
         assert!(!g.is_over());
 
         let fc = take_first_card(&g);
-        g = g.after(Move::new(g.turn, Point::new(2, 1), Point::new(2, 2), fc));
+        g.after(Move::new(g.turn, Point::new(2, 1), Point::new(2, 2), fc));
         assert!(g.is_over());
-
     }
 }

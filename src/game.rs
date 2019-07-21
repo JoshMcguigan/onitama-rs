@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use piece::Side;
 use card::Card;
 use turn::Move;
@@ -9,7 +7,7 @@ use board::Board;
 pub struct Game {
     pub turn: Side,
     pub board: Board,
-    pub player_cards: [HashSet<Card>; 2],
+    pub player_cards: [[Card; 2]; 2],
     pub free_card: Card
 }
 impl Game {
@@ -26,28 +24,24 @@ impl Game {
             turn: cards[4].starter(),
             board: Board::new(),
             player_cards: [
-                {
-                    let mut hs = HashSet::new();
-                    hs.insert(cards[0]);
-                    hs.insert(cards[1]);
-                    hs
-                },
-                {
-                    let mut hs = HashSet::new();
-                    hs.insert(cards[2]);
-                    hs.insert(cards[3]);
-                    hs
-                }
+                [
+                    cards[0],
+                    cards[1],
+                ],
+                [
+                    cards[2],
+                    cards[3],
+                ],
             ],
             free_card: cards[4]
         }
     }
 
-    pub fn cards_of(&self, side: Side) -> HashSet<Card> {
+    pub fn cards_of(&self, side: Side) -> [Card; 2] {
         self.player_cards[side.index()].clone()
     }
 
-    pub fn current_player_cards(&self) -> HashSet<Card> {
+    pub fn current_player_cards(&self) -> [Card; 2] {
         self.cards_of(self.turn)
     }
 
@@ -55,29 +49,23 @@ impl Game {
         self.board.is_game_over()
     }
 
-    pub fn after(&self, m: Move) -> Game {
+    pub fn after(&mut self, m: Move) {
         assert!(m.player == self.turn);
 
-        let mut new_player_cards = [self.player_cards[0].clone(), self.player_cards[1].clone()];
-        let ok = new_player_cards[self.turn.index()].remove(&m.card);
-        assert!(ok);
-        new_player_cards[self.turn.index()].insert(self.free_card);
+        let card_index = if self.player_cards[self.turn.index()][0] == m.card {
+            0
+        } else if self.player_cards[self.turn.index()][1] == m.card {
+            1
+        } else {
+            panic!("invalid move")
+        };
 
-        Game {
-            turn: self.turn.other(),
-            board: self.board.after(m),
-            player_cards: new_player_cards,
-            free_card: m.card
-        }
-    }
-}
-impl Clone for Game {
-    fn clone(&self) -> Game {
-        Game {
-            turn: self.turn,
-            board: self.board,
-            player_cards: [self.player_cards[0].clone(), self.player_cards[1].clone()],
-            free_card: self.free_card
-        }
+        let newly_free_card = self.player_cards[self.turn.index()][card_index];
+        self.player_cards[self.turn.index()][card_index] = self.free_card;
+        self.free_card = newly_free_card;
+
+        self.turn = self.turn.other();
+
+        self.board = self.board.after(m);
     }
 }
