@@ -9,7 +9,6 @@ use board::Board;
 pub struct Game {
     pub turn: Side,
     pub board: Board,
-    pub start_cards: [Card; 5],
     pub player_cards: [HashSet<Card>; 2],
     pub free_card: Card
 }
@@ -26,7 +25,6 @@ impl Game {
         Game {
             turn: cards[4].starter(),
             board: Board::new(),
-            start_cards: cards,
             player_cards: [
                 {
                     let mut hs = HashSet::new();
@@ -68,7 +66,6 @@ impl Game {
         Game {
             turn: self.turn.other(),
             board: self.board.after(m),
-            start_cards: self.start_cards,
             player_cards: new_player_cards,
             free_card: m.card
         }
@@ -79,7 +76,6 @@ impl Clone for Game {
         Game {
             turn: self.turn,
             board: self.board,
-            start_cards: self.start_cards,
             player_cards: [self.player_cards[0].clone(), self.player_cards[1].clone()],
             free_card: self.free_card
         }
