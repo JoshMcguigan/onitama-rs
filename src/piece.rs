@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Side {
     WHITE, BLACK
 }
@@ -17,7 +17,7 @@ impl Side {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub struct Piece {
     pub side: Side,
     pub king: bool

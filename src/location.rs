@@ -1,6 +1,6 @@
 use std::ops::Add;
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub struct Point {
     pub x: u8,
     pub y: u8
@@ -29,7 +29,7 @@ impl Add<Step> for Point {
 }
 
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub struct Step {
     pub dx: i8,
     pub dy: i8
